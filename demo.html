@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=405, initial-scale=1.0">
+<title>DermaLearn Pro — Demo Reels</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap');
+:root{--bg:#0a0e1a;--card:#111827;--cyan:#22d3ee;--pink:#f472b6;--yellow:#fbbf24;--text:#e5e7eb;--dim:#9ca3af;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:#000;display:flex;justify-content:center;align-items:center;height:100vh;font-family:'Inter',sans-serif;overflow:hidden;}
+#reels{width:405px;height:720px;background:var(--bg);position:relative;overflow:hidden;border-radius:16px;box-shadow:0 0 60px rgba(34,211,238,0.15);}
+.scene{position:absolute;width:100%;height:100%;opacity:0;transition:opacity 0.7s ease;padding:28px 24px;display:flex;flex-direction:column;pointer-events:none;}
+.scene.active{opacity:1;z-index:20;pointer-events:auto;}
+h1,h2,h3{color:var(--cyan);font-weight:800;}
+.glow{text-shadow:0 0 20px rgba(34,211,238,0.4);}
+.sub{color:var(--dim);font-size:0.9rem;margin-top:6px;}
+.card{background:var(--card);border:1px solid #1f2937;border-radius:16px;padding:16px;margin-top:14px;animation:up 0.6s ease forwards;opacity:0;transform:translateY(20px);}
+@keyframes up{to{opacity:1;transform:translateY(0);}}
+.badge{display:inline-block;background:rgba(34,211,238,0.12);color:var(--cyan);padding:4px 12px;border-radius:20px;font-size:0.75rem;font-weight:600;border:1px solid rgba(34,211,238,0.25);margin-top:8px;}
+.fire{background:rgba(251,191,36,0.12);color:var(--yellow);border-color:rgba(251,191,36,0.3);}
+.pink-bg{background:rgba(244,114,182,0.12);color:var(--pink);border-color:rgba(244,114,182,0.3);}
+.row{display:flex;gap:10px;margin-top:12px;flex-wrap:wrap;}
+.stat{background:var(--card);border:1px solid #1f2937;border-radius:12px;padding:10px 14px;font-size:0.8rem;color:var(--text);flex:1;text-align:center;min-width:70px;}
+.stat b{display:block;color:var(--cyan);font-size:1.1rem;}
+.menu-item{display:flex;align-items:center;gap:12px;padding:12px;border-radius:12px;color:var(--text);font-size:0.9rem;margin-bottom:6px;opacity:0;animation:up 0.5s ease forwards;}
+.menu-item:nth-child(1){animation-delay:0.1s}
+.menu-item:nth-child(2){animation-delay:0.2s}
+.menu-item:nth-child(3){animation-delay:0.3s}
+.menu-item:nth-child(4){animation-delay:0.4s}
+.menu-item:nth-child(5){animation-delay:0.5s}
+.menu-item:nth-child(6){animation-delay:0.6s}
+.menu-item.active{background:rgba(34,211,238,0.08);border:1px solid rgba(34,211,238,0.25);color:var(--cyan);}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--cyan);box-shadow:0 0 8px var(--cyan);}
+.chat-user{background:#1f2937;color:var(--text);padding:12px 16px;border-radius:16px 16px 4px 16px;margin:10px 0 10px auto;max-width:80%;font-size:0.85rem;opacity:0;animation:pop 0.5s 0.3s forwards;}
+.chat-ai{background:rgba(34,211,238,0.08);border:1px solid rgba(34,211,238,0.2);color:var(--text);padding:14px 16px;border-radius:16px 16px 16px 4px;margin:0 auto 10px 0;max-width:90%;font-size:0.85rem;line-height:1.5;opacity:0;animation:pop 0.5s 0.8s forwards;}
+@keyframes pop{from{opacity:0;transform:scale(0.9)}to{opacity:1;transform:scale(1)}}
+.link{color:var(--cyan);font-size:0.8rem;margin-top:8px;display:flex;align-items:center;gap:6px;}
+.circle{width:100px;height:100px;border-radius:50%;background:linear-gradient(135deg,var(--cyan),#6366f1);display:flex;align-items:center;justify-content:center;font-size:2.5rem;margin:20px auto;box-shadow:0 0 30px rgba(34,211,238,0.3);animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}
+.timer{font-size:3rem;font-weight:800;color:var(--cyan);text-align:center;margin:10px 0;font-variant-numeric:tabular-nums;}
+.pill{background:var(--card);border:1px solid #1f2937;padding:6px 14px;border-radius:20px;font-size:0.8rem;color:var(--text);}
+.fab{position:absolute;right:20px;width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.3rem;box-shadow:0 4px 15px rgba(0,0,0,0.4);animation:float 3s ease-in-out infinite;}
+.fab1{bottom:140px;background:linear-gradient(135deg,#10b981,#059669);animation-delay:0s;}
+.fab2{bottom:80px;background:linear-gradient(135deg,var(--cyan),#0891b2);animation-delay:0.2s;}
+.fab3{bottom:200px;background:linear-gradient(135deg,var(--pink),#db2777);animation-delay:0.4s;}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+.progress{position:absolute;top:0;left:0;height:4px;background:linear-gradient(90deg,var(--cyan),var(--pink));width:0%;transition:width 0.3s linear;z-index:100;}
+.cta-big{font-size:2.2rem;font-weight:800;text-align:center;margin-top:120px;background:linear-gradient(90deg,var(--cyan),var(--pink));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.swipe{position:absolute;bottom:24px;left:50%;transform:translateX(-50%);color:var(--dim);font-size:0.8rem;animation:swipe 1.5s infinite;}
+@keyframes swipe{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(-6px)}}
+</style>
+<base target="_blank">
+</head>
+<body>
+<div id="reels">
+  <div class="progress" id="bar"></div>
+
+  <!-- SCENE 1: HOOK -->
+  <div class="scene active" id="s0">
+    <div style="margin-top:180px;text-align:center">
+      <h1 class="glow" style="font-size:2.4rem">DermaLearn Pro</h1>
+      <div style="font-size:3rem;margin-top:10px;animation:wave 2s infinite">👋</div>
+      <p class="sub" style="font-size:1.05rem;margin-top:14px">Pusat pembelajaran Dermatologi & Kedokteran yang adaptif.</p>
+      <div class="badge" style="margin-top:20px">🎬 Demo Reels</div>
+    </div>
+    <div class="swipe">▲ Mulai Rekam ▲</div>
+  </div>
+
+  <!-- SCENE 2: DASHBOARD -->
+  <div class="scene" id="s1">
+    <h2 style="font-size:1.3rem">Selamat Datang 👋</h2>
+    <p class="sub">Dashboard adaptif dengan gamifikasi</p>
+    <div class="card">
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <b style="color:var(--yellow)">🔥 Tantangan Harian</b>
+        <span class="badge fire">Streak 0 hari</span>
+      </div>
+      <p style="font-size:0.85rem;color:var(--dim);margin-top:8px">Selesaikan 3 aktivitas hari ini!</p>
+      <div class="row">
+        <div class="pill">📖 Baca Materi</div>
+        <div class="pill">🎴 5 Flashcard</div>
+        <div class="pill">⚡ 1 Kuis</div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="stat"><b>36%</b>Progress</div>
+      <div class="stat"><b>1</b>Kuis</div>
+      <div class="stat"><b>1</b>Catatan</div>
+    </div>
+    <div class="badge" style="position:absolute;bottom:28px">📊 Progress Real-Time</div>
+  </div>
+
+  <!-- SCENE 3: SIDEBAR -->
+  <div class="scene" id="s2">
+    <h2 style="font-size:1.1rem;color:var(--dim);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px">Menu Utama</h2>
+    <div class="menu-item"><span>🏠</span> Dashboard</div>
+    <div class="menu-item"><span>💬</span> Kata Penyemangat</div>
+    <div class="menu-item"><span>🧘</span> Sesi Meditasi</div>
+    <div class="menu-item"><span>🎴</span> Flashcards</div>
+    <div class="menu-item"><span>⭐</span> Tebak Kata</div>
+    <div class="menu-item"><span>📝</span> Simulasi Ujian</div>
+    <div style="margin-top:14px;padding-top:14px;border-top:1px solid #1f2937">
+      <div class="menu-item active"><span>🦠</span> Kelainan Kulit Infeksi Parasit</div>
+      <div class="menu-item"><span>🎨</span> Kelainan Pigmentasi Kulit</div>
+      <div class="menu-item"><span>💊</span> Farmakologi Dermatologi</div>
+      <div class="menu-item"><span>🔥</span> Luka Bakar</div>
+    </div>
+    <div class="badge" style="position:absolute;bottom:28px">📚 10+ Materi Blok</div>
+  </div>
+
+  <!-- SCENE 4: MATERI -->
+  <div class="scene" id="s3">
+    <p style="font-size:0.8rem;color:var(--cyan);margin-bottom:6px">Dashboard / Kelainan Kulit Infeksi Parasit</p>
+    <h2 style="font-size:1.2rem">🦠 Kelainan Kulit Akibat Infeksi Parasit</h2>
+    <div class="card" style="display:flex;align-items:center;gap:12px;margin-top:12px">
+      <div style="width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,var(--cyan),#6366f1);display:flex;align-items:center;justify-content:center">👩‍⚕️</div>
+      <div><b style="color:var(--text);font-size:0.95rem">Pengajar</b><p style="font-size:0.85rem;color:var(--dim)">dr. Hanina, M.Biomed</p></div>
+    </div>
+    <div class="card" style="margin-top:12px">
+      <b style="color:var(--pink);font-size:0.95rem">📌 Parasit Penyebab</b>
+      <ul style="margin-top:10px;font-size:0.85rem;color:var(--text);list-style:none;line-height:1.8">
+        <li>• <span style="color:var(--cyan)">Acarina</span> → Sarcoptes scabiei</li>
+        <li>• <span style="color:var(--cyan)">Serangga</span> → Toksin & Alergen</li>
+        <li>• <span style="color:var(--cyan)">Jamur</span> → Mikosis</li>
+        <li>• <span style="color:var(--cyan)">Helmint</span> → Larva migrans</li>
+      </ul>
+    </div>
+    <div class="badge" style="position:absolute;bottom:28px">👩‍⚕️ Verified Content</div>
+  </div>
+
+  <!-- SCENE 5: AI CHAT -->
+  <div class="scene" id="s4">
+    <h2 style="font-size:1.1rem;margin-bottom:14px">🤖 DermaAI</h2>
+    <div class="chat-user">jelaskan tentang luka bakar</div>
+    <div class="chat-ai">
+      <b style="color:var(--cyan)">DermaAI:</b><br>
+      Luka bakar adalah kerusakan kulit akibat thermal, kimia, listrik, atau radiasi.<br><br>
+      <b>Klasifikasi:</b> Derajat I, IIa, IIb, III.<br>
+      <b>Resusitasi:</b> TBSA >20% → Ringer Laktat.
+      <div class="link">📚 Materi Luka Bakar →</div>
+    </div>
+    <div class="badge pink-bg" style="position:absolute;bottom:28px">⚡ Instant Medical Answer</div>
+  </div>
+
+  <!-- SCENE 6: MEDITASI -->
+  <div class="scene" id="s5">
+    <h2 style="text-align:center;font-size:1.1rem">🧘 Sesi Meditasi</h2>
+    <div class="circle">🧘</div>
+    <div class="timer">05:00</div>
+    <p style="text-align:center;color:var(--dim);font-size:0.85rem;margin-bottom:16px">Siap memulai meditasi</p>
+    <div class="row" style="justify-content:center">
+      <div class="pill">3 menit</div>
+      <div class="pill" style="border-color:var(--cyan);color:var(--cyan)">5 menit</div>
+      <div class="pill">10 menit</div>
+    </div>
+    <div class="row" style="margin-top:14px">
+      <div class="card" style="flex:1;text-align:center;font-size:0.8rem"><div style="font-size:1.5rem">🌧️</div>Hujan</div>
+      <div class="card" style="flex:1;text-align:center;font-size:0.8rem"><div style="font-size:1.5rem">💧</div>Air Mengalir</div>
+    </div>
+    <div class="badge" style="position:absolute;bottom:28px">🌧️ White Noise + Timer</div>
+  </div>
+
+  <!-- SCENE 7: VOICE + BEATS -->
+  <div class="scene" id="s6">
+    <h2 style="font-size:1.1rem">🎙️ Voice Note</h2>
+    <div class="card" style="text-align:center;padding:24px">
+      <p style="color:var(--dim);font-size:0.9rem">Belum ada rekaman</p>
+      <div style="background:linear-gradient(90deg,#ef4444,#db2777);color:#fff;padding:12px 24px;border-radius:24px;margin-top:14px;font-weight:700;display:inline-block">● Rekam</div>
+    </div>
+    <h2 style="font-size:1.1rem;margin-top:20px">🎵 DermaBeats</h2>
+    <div class="card" style="text-align:center;padding:20px">
+      <p style="color:var(--dim);font-size:0.9rem;margin-bottom:12px">Belum ada lagu</p>
+      <div style="display:flex;justify-content:center;gap:20px;align-items:center;font-size:1.5rem">
+        <span>⏮</span><span style="font-size:2rem;color:var(--cyan)">▶</span><span>⏭</span>
+      </div>
+      <div class="pill" style="margin-top:14px;display:inline-block">📁 Upload Lagu</div>
+    </div>
+    <div class="badge pink-bg" style="position:absolute;bottom:28px">🎧 Multimodal Learning</div>
+  </div>
+
+  <!-- SCENE 8: FLOATING TOOLS -->
+  <div class="scene" id="s7">
+    <h2 style="font-size:1.1rem">🛠️ Floating Quick Tools</h2>
+    <p class="sub">Akses cepat tanpa bolak-balik menu</p>
+    <div class="card" style="margin-top:20px;height:200px;position:relative;background:linear-gradient(180deg,var(--card),#0a0e1a);border-style:dashed;">
+      <div class="fab fab3" style="right:30px;bottom:auto;top:40px">🎙️</div>
+      <div class="fab fab2" style="right:30px;bottom:auto;top:100px">🤖</div>
+      <div class="fab fab1" style="right:30px;bottom:auto;top:160px">➕</div>
+      <div style="position:absolute;top:20px;right:30px;background:rgba(34,211,238,0.1);border:1px solid rgba(34,211,238,0.2);padding:6px 14px;border-radius:20px;font-size:0.8rem;color:var(--cyan)">⏳ Focus Timer</div>
+    </div>
+    <div class="row" style="margin-top:20px">
+      <div class="card" style="flex:1;text-align:center;font-size:0.85rem">📤 Export Progress</div>
+      <div class="card" style="flex:1;text-align:center;font-size:0.85rem">🎥 Video</div>
+    </div>
+    <div class="badge" style="position:absolute;bottom:28px">📱 UX Mobile-First</div>
+  </div>
+
+  <!-- SCENE 9: CLOSING -->
+  <div class="scene" id="s8">
+    <div style="margin-top:100px;text-align:center">
+      <div class="cta-big">PINTAR.<br>ADAPTIF.<br>LENGKAP.</div>
+      <h2 style="margin-top:30px;color:var(--text)">DermaLearn Pro</h2>
+      <p class="sub" style="margin-top:10px">Smart Medical Learning</p>
+      <div style="margin-top:40px">
+        <div class="badge" style="font-size:1rem;padding:10px 24px">🚀 Link di Bio — Install Sekarang</div>
+      </div>
+      <p style="color:var(--dim);font-size:0.75rem;margin-top:60px">Save & tag teman blokmu! 🔥</p>
+    </div>
+    <div class="swipe" style="animation:none;opacity:0.6">⏹️ Stop Rekaman</div>
+  </div>
+
+</div>
+
+<script>
+const scenes=document.querySelectorAll('.scene');
+const bar=document.getElementById('bar');
+let idx=0;
+const durations=[3000,5000,5000,5000,6000,5000,5000,5000,4000];
+function show(i){
+  scenes.forEach((s,j)=>{s.classList.toggle('active',j===i)});
+  let total=durations.reduce((a,b)=>a+b,0);
+  let past=durations.slice(0,i).reduce((a,b)=>a+b,0);
+  bar.style.width=((past/total)*100)+'%';
+}
+function next(){idx=(idx+1)%scenes.length;show(idx);setTimeout(next,durations[idx]);}
+setTimeout(next,durations[0]);
+</script>
+</body>
+</html>
